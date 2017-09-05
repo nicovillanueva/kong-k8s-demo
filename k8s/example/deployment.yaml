@@ -1,0 +1,25 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: ms-puntos
+spec:
+  replicas: 1 # tells deployment to run 1 pods matching the template
+  template: # create pods using pod definition in this template
+    metadata:
+      # unlike pod-nginx.yaml, the name is not included in the meta data as a unique name is
+      # generated from the deployment name
+      labels:
+        app: ms-puntos
+    spec:
+      containers:
+      - name: ms-puntos
+        image: docker.dev.redbee.io/ms-puntos:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+        readinessProbe:
+            httpGet:
+                path: /health
+                port: 8080
+            initialDelaySeconds: 2
+            periodSeconds: 1
