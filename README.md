@@ -11,10 +11,22 @@
 ## Verificar que esté todo arriba
     kubectl get all
 
-### (Minikube)
-IPs:
+### Minikube
+URLs:
 - `minikube service --url kong-admin`
 - `minikube service --url kong-proxy`
+- `minikube service --url konga`
 
 ## Konga
+### Precondition
+Crear la DB `konga_database`
+
+TODO: Automate it
+
+### Install
     kubectl create -f k8s/konga.yaml
+
+### Config
+- Kong Connection: http://kong-admin:8001
+- Username: admin
+- Password: adminadminadmin

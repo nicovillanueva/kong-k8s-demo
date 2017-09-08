@@ -1,0 +1,1 @@
+- automatizar la creacion de la tabla `konga_database`
