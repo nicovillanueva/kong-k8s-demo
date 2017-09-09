@@ -20,8 +20,7 @@ URLs:
 ## Konga
 ### Precondition
 Crear la DB `konga_database`
-
-TODO: Automate it
+    kubectl create -f k8s/postgres_kongadb.yaml
 
 ### Install
     kubectl create -f k8s/konga.yaml
@@ -30,3 +29,8 @@ TODO: Automate it
 - Kong Connection: http://kong-admin:8001
 - Username: admin
 - Password: adminadminadmin
+
+## Limpiar jobs
+
+    kubectl delete job konga-db-create
+    kubectl delete job kong-migration
