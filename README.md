@@ -20,6 +20,7 @@ URLs:
 ## Konga
 ### Precondition
 Crear la DB `konga_database`
+
     kubectl create -f k8s/postgres_kongadb.yaml
 
 ### Install
