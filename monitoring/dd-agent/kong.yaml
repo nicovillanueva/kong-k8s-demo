@@ -1,0 +1,4 @@
+init_config:
+
+instances:
+  - kong_status_url: http://kong-admin:8001/status/

@@ -1,0 +1,104 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: demoapi-v1
+spec:
+  type: NodePort
+  ports:
+  - name: demoapi-v1
+    port: 5000
+    targetPort: 5000
+    protocol: TCP
+  selector:
+    app: demoapi-v1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: demoapi-v11
+spec:
+  type: NodePort
+  ports:
+  - name: demoapi-v11
+    port: 5000
+    targetPort: 5000
+    protocol: TCP
+  selector:
+    app: demoapi-v11
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: demoapi-v2
+spec:
+  type: NodePort
+  ports:
+  - name: demoapi-v2
+    port: 5000
+    targetPort: 5000
+    protocol: TCP
+  selector:
+    app: demoapi-v2
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: demoapi-v1
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: demoapi-v1
+        app: demoapi-v1
+    spec:
+      containers:
+      - name: demoapi-v1
+        image: nicovillanueva/kong-demoapi:v1.0.0
+        imagePullPolicy: Always
+        ports:
+        - name: demoapi-v1
+          containerPort: 5000
+          protocol: TCP
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: demoapi-v11
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: demoapi-v11
+        app: demoapi-v11
+    spec:
+      containers:
+      - name: demoapi-v11
+        image: nicovillanueva/kong-demoapi:v1.1.0
+        imagePullPolicy: Always
+        ports:
+        - name: demoapi-v11
+          containerPort: 5000
+          protocol: TCP
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: demoapi-v2
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: demoapi-v2
+        app: demoapi-v2
+    spec:
+      containers:
+      - name: demoapi-v2
+        image: nicovillanueva/kong-demoapi:v2.0.0
+        imagePullPolicy: Always
+        ports:
+        - name: demoapi-v2
+          containerPort: 5000
+          protocol: TCP

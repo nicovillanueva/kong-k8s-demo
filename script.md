@@ -1,3 +1,5 @@
+ADMIN=$(minikube service --url kong-admin)
+
 - Levantar Kubernetes
 - Levantar PostgreSQL
     - Correr migration
@@ -28,3 +30,10 @@
     curl -X POST $ADMIN/consumers/meetup/key-auth -d ''
     # Authenticated call
     http post $PROXY/posters apikey:<apikey> foo=bar
+
+
+Rate limiting por API
+Rate limiting por consumer
+
+Canary deploy
+Datadog logging
