@@ -2,6 +2,7 @@ ADMIN=$(minikube service --url kong-admin)
 PROXY=$(minikube service --url kong-proxy)
 
 - Levantar Kubernetes
+    `minikube start`
 - Levantar PostgreSQL
     - Correr migration
 - Levantar Kong
@@ -38,7 +39,27 @@ PROXY=$(minikube service --url kong-proxy)
     http POST $ADMIN/apis name=consumer_limited uris=/limited2 upstream_url=https://httpbin.org/anything
     http POST $ADMIN/apis/consumer_limited/plugins name=rate-limiting config.second=1 consumer_id=...
 
----
+- Canary deploy
+    # Crear upstream
+    http POST $ADMIN/upstreams name=demo.v2.service
 
-Canary deploy
-Datadog logging
+    # Asignarle targets
+    http POST $ADMIN/upstreams/demo.v2.service/targets target=demoapi-v1:5000 weight=100
+    http POST $ADMIN/upstreams/demo.v2.service/targets target=demoapi-v2:5000 weight=10
+
+    # API que vaya al upstream
+    http $ADMIN/apis name=canary upstream_url=http://demo.v2.service/ uris=/
+
+    # Rebalance (no se pueden editar; el `created_at` mas reciente es el activo)
+    http POST $ADMIN/upstreams/demo.v2.service/targets target=demoapi-v1:5000 weight=50
+    http POST $ADMIN/upstreams/demo.v2.service/targets target=demoapi-v2:5000 weight=50
+
+    http POST $ADMIN/upstreams/demo.v2.service/targets target=demoapi-v1:5000 weight=10
+    http POST $ADMIN/upstreams/demo.v2.service/targets target=demoapi-v2:5000 weight=90
+
+    http POST $ADMIN/upstreams/demo.v2.service/targets target=demoapi-v1:5000 weight=0
+    http POST $ADMIN/upstreams/demo.v2.service/targets target=demoapi-v2:5000 weight=100
+
+
+- Datadog logging
+    # TODO?
