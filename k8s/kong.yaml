@@ -72,7 +72,7 @@ spec:
     spec:
       containers:
       - name: kong
-        image: kong
+        image: kong:0.10.2
         env:
           - name: KONG_NGINX_DAEMON
             value: 'off'

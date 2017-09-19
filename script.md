@@ -2,7 +2,6 @@ ADMIN=$(minikube service --url kong-admin)
 PROXY=$(minikube service --url kong-proxy)
 
 - Levantar Kubernetes
-    `minikube start`
 - Levantar PostgreSQL
     - Correr migration
 - Levantar Kong
