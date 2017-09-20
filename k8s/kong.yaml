@@ -43,7 +43,6 @@ spec:
     app: kong
 
 ---
-apiVersion: v1
 kind: Service
 metadata:
   name: kong-admin-ssl
@@ -72,16 +71,22 @@ spec:
     spec:
       containers:
       - name: kong
-        image: kong:0.10.2
+        image: kong
         env:
-          - name: KONG_NGINX_DAEMON
-            value: 'off'
           - name: KONG_PG_PASSWORD
             value: kong
           - name: KONG_PG_HOST
             value: postgres
           - name: KONG_LOG_LEVEL
             value: debug
+          - name: KONG_PROXY_ACCESS_LOG
+            value: /dev/stdout
+          - name: KONG_ADMIN_ACCESS_LOG
+            value: /dev/stdout
+          - name: KONG_PROXY_ERROR_LOG
+            value: /dev/stderr
+          - name: KONG_ADMIN_ERROR_LOG
+            value: /dev/stderr
         ports:
         - name: admin
           containerPort: 8001

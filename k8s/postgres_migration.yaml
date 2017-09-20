@@ -9,7 +9,7 @@ spec:
     spec:
       containers:
       - name: kong-migration
-        image: kong:0.10.2
+        image: kong
         env:
           - name: KONG_NGINX_DAEMON
             value: 'off'
@@ -17,5 +17,7 @@ spec:
             value: kong
           - name: KONG_PG_HOST
             value: postgres
+          - name: KONG_LOG_LEVEL
+            value: debug
         command: [ "/bin/sh", "-c", "kong migrations up" ]
       restartPolicy: Never

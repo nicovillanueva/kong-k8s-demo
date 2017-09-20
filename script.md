@@ -43,21 +43,21 @@ PROXY=$(minikube service --url kong-proxy)
     http POST $ADMIN/upstreams name=demo.v2.service
 
     # Asignarle targets
-    http POST $ADMIN/upstreams/demo.v2.service/targets target=demoapi-v1:5000 weight=100
-    http POST $ADMIN/upstreams/demo.v2.service/targets target=demoapi-v2:5000 weight=10
+    http POST $ADMIN/upstreams/demo.v2.service/targets target=<ip_interna>:5000 weight=100
+    http POST $ADMIN/upstreams/demo.v2.service/targets target=<ip_interna>:5000 weight=10
 
     # API que vaya al upstream
     http $ADMIN/apis name=canary upstream_url=http://demo.v2.service/ uris=/
 
     # Rebalance (no se pueden editar; el `created_at` mas reciente es el activo)
-    http POST $ADMIN/upstreams/demo.v2.service/targets target=demoapi-v1:5000 weight=50
-    http POST $ADMIN/upstreams/demo.v2.service/targets target=demoapi-v2:5000 weight=50
+    http POST $ADMIN/upstreams/demo.v2.service/targets target=<ip_interna>:5000 weight=50
+    http POST $ADMIN/upstreams/demo.v2.service/targets target=<ip_interna>:5000 weight=50
 
-    http POST $ADMIN/upstreams/demo.v2.service/targets target=demoapi-v1:5000 weight=10
-    http POST $ADMIN/upstreams/demo.v2.service/targets target=demoapi-v2:5000 weight=90
+    http POST $ADMIN/upstreams/demo.v2.service/targets target=<ip_interna>:5000 weight=10
+    http POST $ADMIN/upstreams/demo.v2.service/targets target=<ip_interna>:5000 weight=90
 
-    http POST $ADMIN/upstreams/demo.v2.service/targets target=demoapi-v1:5000 weight=0
-    http POST $ADMIN/upstreams/demo.v2.service/targets target=demoapi-v2:5000 weight=100
+    http POST $ADMIN/upstreams/demo.v2.service/targets target=<ip_interna>:5000 weight=0
+    http POST $ADMIN/upstreams/demo.v2.service/targets target=<ip_interna>:5000 weight=100
 
 
 - Datadog logging

@@ -5,7 +5,7 @@ metadata:
 spec:
   type: NodePort
   ports:
-  - name: demoapi-v1
+  - name: http
     port: 5000
     targetPort: 5000
     protocol: TCP
@@ -19,7 +19,7 @@ metadata:
 spec:
   type: NodePort
   ports:
-  - name: demoapi-v2
+  - name: http
     port: 5000
     targetPort: 5000
     protocol: TCP
@@ -39,7 +39,7 @@ spec:
         app: demoapi-v1
     spec:
       containers:
-      - name: demoapi-v1
+      - name: demoapiv1
         image: nicovillanueva/kong-demoapi:v1.0.0
         imagePullPolicy: Always
         ports:
@@ -60,7 +60,7 @@ spec:
         app: demoapi-v2
     spec:
       containers:
-      - name: demoapi-v2
+      - name: demoapiv2
         image: nicovillanueva/kong-demoapi:v2.0.0
         imagePullPolicy: Always
         ports:
