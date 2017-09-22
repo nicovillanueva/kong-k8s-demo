@@ -1,9 +1,17 @@
+# APIsAR - Episode VI
+
+Demo de la Meetup de APIsAR sobre Kong: https://www.meetup.com/es-ES/preview/APIsAR/events/243084908
+
+Preparada para correr sobre Kubernetes. Funciona en local (con minikube), debería funcionar en clusters remotos.
+
+## Minikube
+El mejor invento después del pan lactal: https://github.com/kubernetes/minikube
+
 ## Crear Postgres
     kubectl create -f k8s/postgres.yaml
 
 ## Preparar Postgres para Kong (one-shot job)
     kubectl create -f k8s/postgres_migration.yaml
-    kubectl delete -f k8s/postgres_migration.yaml
 
 ## Crear Kong
     kubectl create -f k8s/kong.yaml
@@ -33,5 +41,8 @@ Crear la DB `konga_database`
 
 ## Limpiar jobs
 
-    kubectl delete job konga-db-create
-    kubectl delete job kong-migration
+    kubectl delete -f k8s/postgres_kongadb.yaml
+    kubectl delete -f k8s/postgres_migration.yaml
+
+## Pendiente!
+No se mostró lo que es el monitoreo mediante Datadog. Asimismo, en la carpeta `monitoring/` está el .yml para deployar el agente de DD, preconfigurado para monitorear Kong. **Previo a crearlo**, editarlo y agregarle una API key válida (en `spec.template.spec.containers.env`)

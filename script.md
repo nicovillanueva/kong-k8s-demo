@@ -49,7 +49,7 @@ PROXY=$(minikube service --url kong-proxy)
     # API que vaya al upstream
     http $ADMIN/apis name=canary upstream_url=http://demo.v2.service/ uris=/
 
-    # Rebalance (no se pueden editar; el `created_at` mas reciente es el activo)
+    # Rebalance (los targets no se pueden editar; el `created_at` mas reciente es el activo)
     http POST $ADMIN/upstreams/demo.v2.service/targets target=10.0.0.20:5000 weight=90
     http POST $ADMIN/upstreams/demo.v2.service/targets target=10.0.0.21:5000 weight=10
 
@@ -61,7 +61,3 @@ PROXY=$(minikube service --url kong-proxy)
 
     http POST $ADMIN/upstreams/demo.v2.service/targets target=10.0.0.20:5000 weight=0
     http POST $ADMIN/upstreams/demo.v2.service/targets target=10.0.0.21:5000 weight=100
-
-
-- Datadog logging
-    # TODO?
